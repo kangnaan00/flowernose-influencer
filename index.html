@@ -1,0 +1,395 @@
+<title>플라워노즈 인플루언서</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+
+<style>
+/* layout: summary header + scrollable table */
+:root {
+  --bg: #f7f5f7;
+  --bg-card: #ffffff;
+  --fg: #1a1518;
+  --fg-muted: #7a6f75;
+  --accent: #8b4a6e;
+  --accent-lt: #f5eaf1;
+  --border: #e3dbe0;
+  --cpv-a: #2a6041;
+  --cpv-b: #c87b1a;
+  --cpv-c: #c0392b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #140f12;
+    --bg-card: #1e181c;
+    --fg: #ede8eb;
+    --fg-muted: #8a7a82;
+    --accent: #c47da8;
+    --accent-lt: #2a1520;
+    --border: #302530;
+    --cpv-a: #4caf78;
+    --cpv-b: #e9943a;
+    --cpv-c: #e05545;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #140f12;
+  --bg-card: #1e181c;
+  --fg: #ede8eb;
+  --fg-muted: #8a7a82;
+  --accent: #c47da8;
+  --accent-lt: #2a1520;
+  --border: #302530;
+  --cpv-a: #4caf78;
+  --cpv-b: #e9943a;
+  --cpv-c: #e05545;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  margin: 0;
+  padding-inline: 24px;
+  padding-block: 36px;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-lt);
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.stat-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.stat-val.accent { color: var(--accent); }
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+thead th {
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--fg-muted);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+thead th.r { text-align: right; }
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--accent-lt); }
+td { padding: 12px 14px; vertical-align: middle; }
+td.r { text-align: right; }
+
+.acct-wrap { display: flex; flex-direction: column; gap: 3px; }
+.acct-name {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 600;
+}
+.acct-name:hover { color: var(--accent); }
+.acct-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tag-beauty {
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-lt);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.ref-link {
+  font-size: 0.68rem;
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+.ref-link:hover { color: var(--accent); text-decoration: underline; }
+
+.amt { font-weight: 500; white-space: nowrap; }
+.avg { color: var(--fg-muted); font-weight: 400; }
+
+.cpv {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.cpv-a .dot { background: var(--cpv-a); }
+.cpv-b .dot { background: var(--cpv-b); }
+.cpv-c .dot { background: var(--cpv-c); }
+.cpv-a { color: var(--cpv-a); }
+.cpv-b { color: var(--cpv-b); }
+.cpv-c { color: var(--cpv-c); }
+
+.saves { font-weight: 500; }
+
+.footer {
+  margin-top: 14px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.7rem;
+  color: var(--fg-muted);
+}
+.legend { display: flex; gap: 14px; flex-wrap: wrap; }
+.leg { display: flex; align-items: center; gap: 5px; }
+.leg-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+@media (max-width: 420px) {
+  body { padding-inline: 16px; }
+  .summary { gap: 20px; }
+}
+</style>
+
+<div class="page-header">
+  <h1>플라워노즈 인플루언서</h1>
+  <span class="badge">19인</span>
+</div>
+
+<div class="summary">
+  <div class="stat">
+    <span class="stat-label">계정 수</span>
+    <span class="stat-val">19인</span>
+  </div>
+  <div class="stat">
+    <span class="stat-label">총 금액</span>
+    <span class="stat-val accent">795만원</span>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>계정</th>
+        <th class="r">금액</th>
+        <th class="r">CPV</th>
+        <th class="r">평균조회수</th>
+        <th class="r">저장공유 CPV</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/woonimong/reels/" target="_blank">woonimong</a></td>
+        <td class="r amt">200,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>0.9원</span></td>
+        <td class="r avg">22.2만</td>
+        <td class="r saves">1,941</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/p/DXmN9c_Eay7/" target="_blank">anotherdoor_travel</a></td>
+        <td class="r amt">350,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>3.6원</span></td>
+        <td class="r avg">9.7만</td>
+        <td class="r saves">389</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="acct-wrap">
+            <a class="acct-name" href="https://www.instagram.com/seria_980/reels/" target="_blank">seria_980</a>
+            <div class="acct-meta">
+              <span class="tag-beauty">뷰티</span>
+              <a class="ref-link" href="https://www.instagram.com/reel/DaH3RNAvi0k/" target="_blank">팝업 레퍼런스 →</a>
+            </div>
+          </div>
+        </td>
+        <td class="r amt">150,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>3.3원</span></td>
+        <td class="r avg">4.5만</td>
+        <td class="r saves">882</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/chocomi_travel/" target="_blank">chocomi_travel</a></td>
+        <td class="r amt">500,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>4.0원</span></td>
+        <td class="r avg">12.5만</td>
+        <td class="r saves">301</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/ye._.bbiiii/reels/" target="_blank">ye._.bbiiii</a></td>
+        <td class="r amt">250,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>5.8원</span></td>
+        <td class="r avg">4.3만</td>
+        <td class="r saves">1,624</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/cherr__iy/" target="_blank">cherr__iy</a></td>
+        <td class="r amt">250,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>4.3원</span></td>
+        <td class="r avg">5.8만</td>
+        <td class="r saves">475</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/rorocouple_trip" target="_blank">rorocouple_trip</a></td>
+        <td class="r amt">400,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>2.4원</span></td>
+        <td class="r avg">16.7만</td>
+        <td class="r saves">142</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/popup_dangni/reels/" target="_blank">popup_dangni</a></td>
+        <td class="r amt">500,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>3.8원</span></td>
+        <td class="r avg">13.2만</td>
+        <td class="r saves">298</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/honey___pick/reels/" target="_blank">honey___pick</a></td>
+        <td class="r amt">500,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>6.7원</span></td>
+        <td class="r avg">7.5만</td>
+        <td class="r saves">869</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/hid_zip/reels/" target="_blank">hid_zip</a></td>
+        <td class="r amt">700,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>8.1원</span></td>
+        <td class="r avg">8.6만</td>
+        <td class="r saves">1,397</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/someda._.ily/reels/" target="_blank">someda._.ily</a></td>
+        <td class="r amt">600,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>7.1원</span></td>
+        <td class="r avg">8.5만</td>
+        <td class="r saves">2,533</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/j_o_o_sy/reels/" target="_blank">j_o_o_sy</a></td>
+        <td class="r amt">400,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>7.4원</span></td>
+        <td class="r avg">5.4만</td>
+        <td class="r saves">1,967</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/sol.han.day/reels/" target="_blank">sol.han.day</a></td>
+        <td class="r amt">250,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>8.2원</span></td>
+        <td class="r avg">3.0만</td>
+        <td class="r saves">665</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/p/DRUA2hGESuz/" target="_blank">ha.liday</a></td>
+        <td class="r amt">350,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>3.5원</span></td>
+        <td class="r avg">10.0만</td>
+        <td class="r saves">193</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/reels/DXx3BGeBWXA/" target="_blank">hotple_honeytip</a></td>
+        <td class="r amt">400,000원</td>
+        <td class="r"><span class="cpv cpv-a"><span class="dot"></span>9.5원</span></td>
+        <td class="r avg">4.2만</td>
+        <td class="r saves">649</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/a.zihyyyy/" target="_blank">a.zihyyyy</a></td>
+        <td class="r amt">700,000원</td>
+        <td class="r"><span class="cpv cpv-b"><span class="dot"></span>10.6원</span></td>
+        <td class="r avg">6.6만</td>
+        <td class="r saves">1,274</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/namuriki/reels/" target="_blank">namuriki</a></td>
+        <td class="r amt">500,000원</td>
+        <td class="r"><span class="cpv cpv-b"><span class="dot"></span>11.0원</span></td>
+        <td class="r avg">4.5만</td>
+        <td class="r saves">366</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/pickstival/reels/" target="_blank">pickstival</a></td>
+        <td class="r amt">500,000원</td>
+        <td class="r"><span class="cpv cpv-c"><span class="dot"></span>18.4원</span></td>
+        <td class="r avg">2.7만</td>
+        <td class="r saves">266</td>
+      </tr>
+      <tr>
+        <td><a class="acct-name" href="https://www.instagram.com/bae.sajang/reels/" target="_blank">bae.sajang</a></td>
+        <td class="r amt">450,000원</td>
+        <td class="r"><span class="cpv cpv-c"><span class="dot"></span>22.1원</span></td>
+        <td class="r avg">2.0만</td>
+        <td class="r saves">316</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  <div class="legend">
+    <span class="leg"><span class="leg-dot" style="background:var(--cpv-a)"></span>10원 미만</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--cpv-b)"></span>10–15원</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--cpv-c)"></span>15원 초과</span>
+  </div>
+  <span>저장공유 CPV = 평균 저장+보내기 수</span>
+</div>
